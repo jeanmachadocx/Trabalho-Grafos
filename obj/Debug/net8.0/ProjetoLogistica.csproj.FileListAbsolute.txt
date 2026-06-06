@@ -1,0 +1,15 @@
+c:\Users\Jean.Machado\Desktop\Faculdade\Grafos\Trabalho\bin\Debug\net8.0\ProjetoLogistica.exe
+c:\Users\Jean.Machado\Desktop\Faculdade\Grafos\Trabalho\bin\Debug\net8.0\ProjetoLogistica.deps.json
+c:\Users\Jean.Machado\Desktop\Faculdade\Grafos\Trabalho\bin\Debug\net8.0\ProjetoLogistica.runtimeconfig.json
+c:\Users\Jean.Machado\Desktop\Faculdade\Grafos\Trabalho\bin\Debug\net8.0\ProjetoLogistica.dll
+c:\Users\Jean.Machado\Desktop\Faculdade\Grafos\Trabalho\bin\Debug\net8.0\ProjetoLogistica.pdb
+c:\Users\Jean.Machado\Desktop\Faculdade\Grafos\Trabalho\obj\Debug\net8.0\ProjetoLogistica.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\Jean.Machado\Desktop\Faculdade\Grafos\Trabalho\obj\Debug\net8.0\ProjetoLogistica.AssemblyInfoInputs.cache
+c:\Users\Jean.Machado\Desktop\Faculdade\Grafos\Trabalho\obj\Debug\net8.0\ProjetoLogistica.AssemblyInfo.cs
+c:\Users\Jean.Machado\Desktop\Faculdade\Grafos\Trabalho\obj\Debug\net8.0\ProjetoLogistica.csproj.CoreCompileInputs.cache
+c:\Users\Jean.Machado\Desktop\Faculdade\Grafos\Trabalho\obj\Debug\net8.0\ProjetoLogistica.sourcelink.json
+c:\Users\Jean.Machado\Desktop\Faculdade\Grafos\Trabalho\obj\Debug\net8.0\ProjetoLogistica.dll
+c:\Users\Jean.Machado\Desktop\Faculdade\Grafos\Trabalho\obj\Debug\net8.0\refint\ProjetoLogistica.dll
+c:\Users\Jean.Machado\Desktop\Faculdade\Grafos\Trabalho\obj\Debug\net8.0\ProjetoLogistica.pdb
+c:\Users\Jean.Machado\Desktop\Faculdade\Grafos\Trabalho\obj\Debug\net8.0\ProjetoLogistica.genruntimeconfig.cache
+c:\Users\Jean.Machado\Desktop\Faculdade\Grafos\Trabalho\obj\Debug\net8.0\ref\ProjetoLogistica.dll
