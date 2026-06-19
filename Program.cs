@@ -79,50 +79,89 @@ class Program
 
     static void MenuDijkstra()
     {
-        if (grafo == null) { Console.WriteLine("Carregue um grafo primeiro."); return; }
-
-        Console.Write("Hub de origem: ");
-        int origem = int.Parse(Console.ReadLine());
-
-        Console.Write("Hub de destino: ");
-        int destino = int.Parse(Console.ReadLine());
-
-        var (custo, caminho) = Dijkstra.Executar(grafo, origem, destino);
-
-        Logger.Separador();
-        Logger.Registrar("[Dijkstra] Roteamento de Menor Custo");
-        Logger.Registrar($"Origem: {origem} | Destino: {destino}");
-
-        if (custo == -1)
+        if (grafo == null)
         {
-            Logger.Registrar("Não existe caminho entre os hubs informados.");
+            Console.WriteLine("Carregue um grafo primeiro.");
+            return;
         }
-        else
+
+        int origem = LerHubValido("Hub de origem: ");
+        int destino = LerHubValido("Hub de destino: ");
+
+        try
         {
-            Logger.Registrar($"Custo total: R$ {custo}");
-            Logger.Registrar($"Caminho: {string.Join(" -> ", caminho)}");
+            var (custo, caminho) = Dijkstra.Executar(grafo, origem, destino);
+
+            Logger.Separador();
+            Logger.Registrar("[Dijkstra] Roteamento de Menor Custo");
+            Logger.Registrar($"Origem: {origem} | Destino: {destino}");
+
+            if (custo == -1)
+            {
+                Logger.Registrar("Não existe caminho entre os hubs informados.");
+            }
+            else
+            {
+                Logger.Registrar($"Custo total: R$ {custo}");
+                Logger.Registrar($"Caminho: {string.Join(" -> ", caminho)}");
+            }
+        }
+        catch (ArgumentOutOfRangeException ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
 
     static void MenuFordFulkerson()
     {
-        if (grafo == null) { Console.WriteLine("Carregue um grafo primeiro."); return; }
+        if (grafo == null)
+        {
+            Console.WriteLine("Carregue um grafo primeiro.");
+            return;
+        }
 
-        Console.Write("Hub S (origem): ");
-        int s = int.Parse(Console.ReadLine());
+        int s = LerHubValido("Hub S (origem): ");
+        int t = LerHubValido("Hub T (destino): ");
 
-        Console.Write("Hub T (destino): ");
-        int t = int.Parse(Console.ReadLine());
+        try
+        {
+            var (fluxo, corte) = FordFulkerson.Executar(grafo, s, t);
 
-        var (fluxo, corte) = FordFulkerson.Executar(grafo, s, t);
+            Logger.Separador();
+            Logger.Registrar("[Ford-Fulkerson] Capacidade Máxima de Escoamento");
+            Logger.Registrar($"S: {s} | T: {t}");
+            Logger.Registrar($"Fluxo máximo: {fluxo} toneladas/dia");
+            Logger.Registrar("Corte mínimo (arestas gargalo):");
 
-        Logger.Separador();
-        Logger.Registrar("[Ford-Fulkerson] Capacidade Máxima de Escoamento");
-        Logger.Registrar($"S: {s} | T: {t}");
-        Logger.Registrar($"Fluxo máximo: {fluxo} toneladas/dia");
-        Logger.Registrar("Corte mínimo (arestas gargalo):");
+            foreach (var (u, v) in corte)
+                Logger.Registrar($"  {u} -> {v}");
+        }
+        catch (ArgumentOutOfRangeException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
 
-        foreach (var (u, v) in corte)
-            Logger.Registrar($"  {u} -> {v}");
+    static int LerHubValido(string mensagem)
+    {
+        while (true)
+        {
+            Console.Write(mensagem);
+            string entrada = Console.ReadLine();
+
+            if (!int.TryParse(entrada, out int valor))
+            {
+                Console.WriteLine("Digite um número inteiro válido.");
+                continue;
+            }
+
+            if (grafo == null || valor < 1 || valor > grafo.QuantidadeVertices)
+            {
+                Console.WriteLine($"Digite um valor entre 1 e {grafo.QuantidadeVertices}.");
+                continue;
+            }
+
+            return valor;
+        }
     }
 }

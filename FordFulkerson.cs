@@ -32,6 +32,13 @@ public static class FordFulkerson
         Grafo grafo, int origem, int destino)
     {
         int n = grafo.QuantidadeVertices + 1;
+
+        if (origem < 1 || origem >= n)
+            throw new ArgumentOutOfRangeException(nameof(origem), $"Hub S inválido. Informe um valor entre 1 e {n - 1}.");
+
+        if (destino < 1 || destino >= n)
+            throw new ArgumentOutOfRangeException(nameof(destino), $"Hub T inválido. Informe um valor entre 1 e {n - 1}.");
+
         int[,] capacidade = grafo.GetMatrizCapacidade();
 
         int[] pai = new int[n];
