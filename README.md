@@ -4,7 +4,7 @@ Trabalho Prático da disciplina **Algoritmos em Grafos** — PUC Minas 2026/01.
 
 O sistema analisa e otimiza uma rede logística representada por um grafo direcionado e ponderado, respondendo perguntas estratégicas da empresa fictícia **Entrega Máxima Logística S.A.**
 
-Link RELATORIO TECNICO: https://docs.google.com/document/d/1xq4tDxqpBReh_O67DIqIpmNGQF3-5bwBtxB7ldHG5lY/edit?usp=sharing
+Link RELATÓRIO TECNICO: https://docs.google.com/document/d/1xq4tDxqpBReh_O67DIqIpmNGQF3-5bwBtxB7ldHG5lY/edit?usp=sharing
 
 ---
 
