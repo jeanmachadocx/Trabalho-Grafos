@@ -24,37 +24,3 @@ public static class Coloracao
         throw new NotImplementedException("Coloração ainda não implementada.");
     }
 }
-
-
-// =====================================================================
-// Euler – Ciclo Euleriano (Hierholzer)
-// A ser implementado por outro membro do trio
-// =====================================================================
-public static class Euler
-{
-    public static bool EhEuleriano(Grafo grafo)
-    {
-        // TODO
-        throw new NotImplementedException("Euler ainda não implementado.");
-    }
-
-    public static List<int> Hierholzer(Grafo grafo, int inicio)
-    {
-        // TODO
-        throw new NotImplementedException("Hierholzer ainda não implementado.");
-    }
-}
-
-
-// =====================================================================
-// Hamilton – Ciclo Hamiltoniano (Backtracking)
-// A ser implementado por outro membro do trio
-// =====================================================================
-public static class Hamilton
-{
-    public static (bool existe, List<int> caminho) Executar(Grafo grafo, int inicio)
-    {
-        // TODO
-        throw new NotImplementedException("Hamilton ainda não implementado.");
-    }
-}

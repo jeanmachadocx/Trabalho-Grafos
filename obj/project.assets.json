@@ -8,24 +8,31 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Jean.Machado\\.nuget\\packages\\": {}
+    "C:\\Users\\PICHAU\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\Jean.Machado\\Desktop\\Faculdade\\Grafos\\Trabalho\\ProjetoLogistica.csproj",
+      "projectUniqueName": "C:\\Users\\PICHAU\\source\\repos\\Trabalho-Grafos\\Trabalho-Grafos\\ProjetoLogistica.csproj",
       "projectName": "ProjetoLogistica",
-      "projectPath": "c:\\Users\\Jean.Machado\\Desktop\\Faculdade\\Grafos\\Trabalho\\ProjetoLogistica.csproj",
-      "packagesPath": "C:\\Users\\Jean.Machado\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\Jean.Machado\\Desktop\\Faculdade\\Grafos\\Trabalho\\obj\\",
+      "projectPath": "C:\\Users\\PICHAU\\source\\repos\\Trabalho-Grafos\\Trabalho-Grafos\\ProjetoLogistica.csproj",
+      "packagesPath": "C:\\Users\\PICHAU\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\PICHAU\\source\\repos\\Trabalho-Grafos\\Trabalho-Grafos\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Jean.Machado\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\PICHAU\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -62,24 +69,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[8.0.27, 8.0.27]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[8.0.27, 8.0.27]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[8.0.27, 8.0.27]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[8.0.27, 8.0.27]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"

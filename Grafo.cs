@@ -73,6 +73,24 @@ public class Grafo
         }
     }
 
+    // Grau de saída: quantidade de arestas que partem do vértice
+    public int GetGrauSaida(int vertice)
+    {
+        return GetVizinhos(vertice).Count;
+    }
+
+    // Grau de entrada: quantidade de arestas que chegam ao vértice
+    public int GetGrauEntrada(int vertice)
+    {
+        int grau = 0;
+        foreach (var a in Arestas)
+        {
+            if (a.Destino == vertice)
+                grau++;
+        }
+        return grau;
+    }
+
     // Retorna a matriz de capacidade (cópia) para o Ford-Fulkerson
     public int[,] GetMatrizCapacidade()
     {

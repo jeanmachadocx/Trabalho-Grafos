@@ -16,7 +16,7 @@ class Program
             Console.WriteLine("2 - Capacidade Máxima de Escoamento (Ford-Fulkerson)");
             Console.WriteLine("3 - Expansão da Rede (Kruskal)          [em breve]");
             Console.WriteLine("4 - Agendamento de Manutenções (Coloração) [em breve]");
-            Console.WriteLine("5 - Rota Única de Inspeção (Euler/Hamilton) [em breve]");
+            Console.WriteLine("5 - Rota Única de Inspeção (Euler/Hamilton)");
             Console.WriteLine("6 - Carregar outro arquivo");
             Console.WriteLine("0 - Sair");
             Console.Write("\nEscolha: ");
@@ -36,8 +36,11 @@ class Program
 
                 case "3":
                 case "4":
-                case "5":
                     Console.WriteLine("Este módulo será implementado em breve.");
+                    break;
+
+                case "5":
+                    MenuRotaInspecao();
                     break;
 
                 case "6":
@@ -135,6 +138,94 @@ class Program
 
             foreach (var (u, v) in corte)
                 Logger.Registrar($"  {u} -> {v}");
+        }
+        catch (ArgumentOutOfRangeException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    static void MenuRotaInspecao()
+    {
+        if (grafo == null)
+        {
+            Console.WriteLine("Carregue um grafo primeiro.");
+            return;
+        }
+
+        Console.WriteLine("--- Rota Única de Inspeção ---");
+        Console.WriteLine("A - Percurso de Rotas  (todas as arestas uma vez) [Euler]");
+        Console.WriteLine("B - Percurso de Hubs   (todos os vértices uma vez) [Hamilton]");
+        Console.Write("\nEscolha o cenário: ");
+
+        string cenario = Console.ReadLine()?.Trim().ToUpper();
+        Console.WriteLine();
+
+        switch (cenario)
+        {
+            case "A":
+                MenuEuler();
+                break;
+
+            case "B":
+                MenuHamilton();
+                break;
+
+            default:
+                Console.WriteLine("Cenário inválido.");
+                break;
+        }
+    }
+
+    static void MenuEuler()
+    {
+        int inicio = LerHubValido("Hub inicial: ");
+
+        try
+        {
+            var (existe, percurso, motivo) = Euler.Executar(grafo, inicio);
+
+            Logger.Separador();
+            Logger.Registrar("[Euler] Percurso de Rotas (Ciclo Euleriano)");
+            Logger.Registrar($"Início: {inicio}");
+
+            if (existe)
+            {
+                Logger.Registrar("Resultado: Percurso possível.");
+                Logger.Registrar($"Sequência: {string.Join(" -> ", percurso)}");
+            }
+            else
+            {
+                Logger.Registrar($"Resultado: Não é possível. Motivo: {motivo}");
+            }
+        }
+        catch (ArgumentOutOfRangeException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    static void MenuHamilton()
+    {
+        int inicio = LerHubValido("Hub inicial: ");
+
+        try
+        {
+            var (existe, caminho) = Hamilton.Executar(grafo, inicio);
+
+            Logger.Separador();
+            Logger.Registrar("[Hamilton] Percurso de Hubs (Ciclo Hamiltoniano)");
+            Logger.Registrar($"Início: {inicio}");
+
+            if (existe)
+            {
+                Logger.Registrar("Resultado: Percurso possível.");
+                Logger.Registrar($"Sequência: {string.Join(" -> ", caminho)}");
+            }
+            else
+            {
+                Logger.Registrar("Resultado: Não é possível visitar todos os hubs exatamente uma vez e retornar ao inicial.");
+            }
         }
         catch (ArgumentOutOfRangeException ex)
         {

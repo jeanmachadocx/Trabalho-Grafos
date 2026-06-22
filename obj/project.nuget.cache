@@ -1,13 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9odliN1C/Ek=",
+  "dgSpecHash": "7GDHCpANbgE=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Jean.Machado\\Desktop\\Faculdade\\Grafos\\Trabalho\\ProjetoLogistica.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\Jean.Machado\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.27\\microsoft.netcore.app.ref.8.0.27.nupkg.sha512",
-    "C:\\Users\\Jean.Machado\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.27\\microsoft.windowsdesktop.app.ref.8.0.27.nupkg.sha512",
-    "C:\\Users\\Jean.Machado\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.27\\microsoft.aspnetcore.app.ref.8.0.27.nupkg.sha512",
-    "C:\\Users\\Jean.Machado\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.27\\microsoft.netcore.app.host.win-x64.8.0.27.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Users\\PICHAU\\source\\repos\\Trabalho-Grafos\\Trabalho-Grafos\\ProjetoLogistica.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }
