@@ -14,8 +14,8 @@ class Program
             Console.WriteLine("\n--- Menu ---");
             Console.WriteLine("1 - Roteamento de Menor Custo (Dijkstra)");
             Console.WriteLine("2 - Capacidade Máxima de Escoamento (Ford-Fulkerson)");
-            Console.WriteLine("3 - Expansão da Rede (Kruskal)          [em breve]");
-            Console.WriteLine("4 - Agendamento de Manutenções (Coloração) [em breve]");
+            Console.WriteLine("3 - Expansão da Rede de Comunicação (Kruskal)");
+            Console.WriteLine("4 - Agendamento de Manutenções sem Conflito (Welsh-Powell)");
             Console.WriteLine("5 - Rota Única de Inspeção (Euler/Hamilton)");
             Console.WriteLine("6 - Carregar outro arquivo");
             Console.WriteLine("0 - Sair");
@@ -35,8 +35,11 @@ class Program
                     break;
 
                 case "3":
+                    MenuKruskal();
+                    break;
+
                 case "4":
-                    Console.WriteLine("Este módulo será implementado em breve.");
+                    MenuWelshPowell();
                     break;
 
                 case "5":
@@ -143,6 +146,73 @@ class Program
         {
             Console.WriteLine(ex.Message);
         }
+    }
+
+    static void MenuKruskal()
+    {
+        if (grafo == null)
+        {
+            Console.WriteLine("Carregue um grafo primeiro.");
+            return;
+        }
+
+        var (custo, arvore) = Kruskal.Executar(grafo);
+
+        Logger.Separador();
+        Logger.Registrar("[Kruskal] Expansão da Rede de Comunicação");
+
+        if (custo == -1)
+        {
+            Logger.Registrar("Grafo desconexo — não é possível interligar todos os hubs.");
+            Logger.Registrar($"Conexões parciais encontradas: {arvore.Count} de {grafo.QuantidadeVertices - 1} necessárias.");
+        }
+        else
+        {
+            Logger.Registrar($"Conexões selecionadas: {arvore.Count}");
+            Logger.Registrar($"Custo total da rede: R$ {custo}");
+            Logger.Registrar("Conexões de fibra óptica:");
+
+            foreach (var a in arvore)
+                Logger.Registrar($"  {a.Origem} -- {a.Destino}  |  Custo: R$ {a.Peso}");
+
+            Logger.Registrar($"Todos os {grafo.QuantidadeVertices} hubs estão interligados com custo mínimo.");
+        }
+    }
+
+    static void MenuWelshPowell()
+    {
+        if (grafo == null)
+        {
+            Console.WriteLine("Carregue um grafo primeiro.");
+            return;
+        }
+
+        if (grafo.QuantidadeArestas == 0)
+        {
+            Console.WriteLine("Nenhuma rota disponível para agendamento.");
+            return;
+        }
+
+        var (numTurnos, cores) = WelshPowell.Executar(grafo);
+        List<Aresta> rotas = grafo.Arestas;
+
+        Logger.Separador();
+        Logger.Registrar("[Welsh-Powell] Agendamento de Manutenções sem Conflito");
+        Logger.Registrar($"Rotas analisadas: {rotas.Count}");
+        Logger.Registrar($"Turnos necessários: {numTurnos}");
+
+        for (int turno = 0; turno < numTurnos; turno++)
+        {
+            Logger.Separador();
+            Logger.Registrar($"Turno {turno + 1}:");
+
+            for (int i = 0; i < rotas.Count; i++)
+                if (cores[i] == turno)
+                    Logger.Registrar($"  Rota {i + 1}: {rotas[i].Origem} -> {rotas[i].Destino}  |  Peso: {rotas[i].Peso}");
+        }
+
+        Logger.Separador();
+        Logger.Registrar($"Com {numTurnos} turno(s) é possível executar todas as manutenções sem conflito de recursos.");
     }
 
     static void MenuRotaInspecao()
