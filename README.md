@@ -32,7 +32,7 @@ ProjetoLogistica/
 | II | Capacidade Máxima de Escoamento | Ford-Fulkerson (Edmonds-Karp) |
 | III | Expansão da Rede de Comunicação | Kruskal |
 | IV | Agendamento de Manutenções sem Conflito | Coloração de Grafos |
-| V-A | Percurso de Rotas (arestas) | Ciclo Euleriano (Hierholzer) |
+| V-A | Percurso de Rotas (arestas) | Ciclo Euleriano (Fleury) |
 | V-B | Percurso de Hubs (vértices) | Ciclo Hamiltoniano (Backtracking) |
 
 ---

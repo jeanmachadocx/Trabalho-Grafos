@@ -1,8 +1,6 @@
 public static class Euler
 {
     // Verifica a existência do Ciclo Euleriano e, se existir, constrói o percurso.
-    // Grafo direcionado: precisa de grauEntrada == grauSaida em todo vértice
-    // e de todos os vértices com aresta dentro de um único componente fortemente conexo.
     public static (bool existe, List<int> percurso, string motivo) Executar(Grafo grafo, int inicio)
     {
         int n = grafo.QuantidadeVertices;
@@ -10,7 +8,6 @@ public static class Euler
         if (inicio < 1 || inicio > n)
             throw new ArgumentOutOfRangeException(nameof(inicio), $"Hub inicial inválido. Informe um valor entre 1 e {n}.");
 
-        // Condição 1: balanceamento de grau (entrada == saída)
         for (int v = 1; v <= n; v++)
         {
             int entrada = grafo.GetGrauEntrada(v);
@@ -21,37 +18,32 @@ public static class Euler
                     $"o hub {v} tem grau de entrada ({entrada}) diferente do grau de saída ({saida}).");
         }
 
-        // Condição 2: conectividade forte dos vértices que possuem arestas (Kosaraju)
-        if (!FortementeConexo(grafo))
+        if (!FortementeConexo_Kosaraju(grafo))
             return (false, new List<int>(),
                 "as rotas não formam um único componente fortemente conexo.");
 
-        // Ambas as condições satisfeitas: constrói o percurso com Hierholzer
-        List<int> percurso = Hierholzer(grafo, inicio);
+        List<int> percurso = Fleury(grafo, inicio);
         return (true, percurso, string.Empty);
     }
 
-    // Kosaraju: verifica se todos os vértices com grau != 0 estão em um único SCC.
-    private static bool FortementeConexo(Grafo grafo)
+    private static bool FortementeConexo_Kosaraju(Grafo grafo)
     {
         int n = grafo.QuantidadeVertices;
 
-        // Adjacência normal e transposta montadas a partir da lista de arestas
         List<int>[] adj = new List<int>[n + 1];
-        List<int>[] adjT = new List<int>[n + 1];
+        List<int>[] adjTransposto = new List<int>[n + 1];
         for (int i = 0; i <= n; i++)
         {
             adj[i] = new List<int>();
-            adjT[i] = new List<int>();
+            adjTransposto[i] = new List<int>();
         }
 
         foreach (var a in grafo.Arestas)
         {
             adj[a.Origem].Add(a.Destino);
-            adjT[a.Destino].Add(a.Origem);
+            adjTransposto[a.Destino].Add(a.Origem);
         }
 
-        // Escolhe um vértice de partida que possua arestas (ignora isolados)
         int partida = -1;
         for (int v = 1; v <= n; v++)
         {
@@ -62,7 +54,6 @@ public static class Euler
             }
         }
 
-        // Sem arestas: não há rotas para inspecionar
         if (partida == -1)
             return false;
 
@@ -71,7 +62,7 @@ public static class Euler
         Stack<int> ordem = new Stack<int>();
         for (int v = 1; v <= n; v++)
         {
-            if (!visitado[v] && (adj[v].Count > 0 || adjT[v].Count > 0))
+            if (!visitado[v] && (adj[v].Count > 0 || adjTransposto[v].Count > 0))
                 PreencherOrdem(v, adj, visitado, ordem);
         }
 
@@ -84,12 +75,10 @@ public static class Euler
             if (!visitado[v])
             {
                 componentes++;
-                Buscar(v, adjT, visitado);
+                Buscar(v, adjTransposto, visitado);
             }
         }
 
-        // Fortemente conexo (para fins eulerianos) se todos os vértices com aresta
-        // formam exatamente um componente.
         return componentes == 1;
     }
 
@@ -104,51 +93,85 @@ public static class Euler
         ordem.Push(v);
     }
 
-    private static void Buscar(int v, List<int>[] adj, bool[] visitado)
+    private static void Buscar(int v, List<int>[] adjTransposto, bool[] visitado)
     {
         visitado[v] = true;
-        foreach (int w in adj[v])
+        foreach (int w in adjTransposto[v])
         {
             if (!visitado[w])
-                Buscar(w, adj, visitado);
+                Buscar(w, adjTransposto, visitado);
         }
     }
 
-    // Hierholzer: monta uma adjacência local consumível (suporta arestas paralelas)
-    // e percorre o grafo formando o circuito euleriano.
-    private static List<int> Hierholzer(Grafo grafo, int inicio)
+    private static List<int> Fleury(Grafo grafo, int inicio)
     {
         int n = grafo.QuantidadeVertices;
 
-        // Pilha de destinos não usados por vértice
-        Stack<int>[] saidas = new Stack<int>[n + 1];
+        List<int>[] saidas = new List<int>[n + 1];
         for (int i = 0; i <= n; i++)
-            saidas[i] = new Stack<int>();
+            saidas[i] = new List<int>();
 
         foreach (var a in grafo.Arestas)
-            saidas[a.Origem].Push(a.Destino);
+            saidas[a.Origem].Add(a.Destino);
 
-        List<int> circuito = new List<int>();
-        Stack<int> caminho = new Stack<int>();
-        caminho.Push(inicio);
+        int arestasRestantes = grafo.Arestas.Count;
 
-        while (caminho.Count > 0)
+        List<int> circuito = new List<int> { inicio };
+        int atual = inicio;
+
+        while (arestasRestantes > 0)
         {
-            int u = caminho.Peek();
+            List<int> destinos = saidas[atual];
 
-            if (saidas[u].Count > 0)
+            int escolhido = 0;
+            for (int i = 0; i < destinos.Count; i++)
             {
-                int proximo = saidas[u].Pop();
-                caminho.Push(proximo);
+                if (!EhPonte(saidas, atual, i, arestasRestantes))
+                {
+                    escolhido = i;
+                    break;
+                }
             }
-            else
-            {
-                circuito.Add(u);
-                caminho.Pop();
-            }
+
+            int proximo = destinos[escolhido];
+            destinos.RemoveAt(escolhido);
+            arestasRestantes--;
+
+            circuito.Add(proximo);
+            atual = proximo;
         }
 
-        circuito.Reverse();
         return circuito;
+    }
+
+    private static bool EhPonte(List<int>[] saidas, int aDestino, int indice, int arestasRestantes)
+    {
+        if (saidas[aDestino].Count == 1)
+            return false;
+
+        int destino = saidas[aDestino][indice];
+
+        saidas[aDestino].RemoveAt(indice);
+
+        bool[] visitado = new bool[saidas.Length];
+        int alcancaveis = ContarArestasAlcancaveis(destino, saidas, visitado);
+
+        saidas[aDestino].Insert(indice, destino);
+
+        return alcancaveis < arestasRestantes - 1;
+    }
+
+    private static int ContarArestasAlcancaveis(int v, List<int>[] saidas, bool[] visitado)
+    {
+        visitado[v] = true;
+        int total = saidas[v].Count; 
+
+        foreach (int w in saidas[v])
+        {
+            if (!visitado[w])
+                total += ContarArestasAlcancaveis(w, saidas, visitado);
+        }
+
+        return total;
     }
 }

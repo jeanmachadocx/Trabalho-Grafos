@@ -20,11 +20,9 @@ public static class Hamilton
         return (false, new List<int>());
     }
 
-    // atual: vértice atual | inicio: hub de partida | visitados: quantos já foram incluídos
     private static bool Backtrack(Grafo grafo, int atual, int inicio, int visitados, int n,
         bool[] visitado, List<int> caminho)
     {
-        // Todos os hubs visitados: o ciclo fecha se existir aresta de volta ao início
         if (visitados == n)
         {
             foreach (var (vizinho, _, _) in grafo.GetVizinhos(atual))
